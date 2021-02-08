@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>create paper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="assests/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assests/css/style.css">
+    <link rel="stylesheet" href="assests/css/fontawesome/css/all.css">
+
+
+</head>
+<body>
+<style>
+    .stepwizard-step p {
+        margin-top: 10px;
+    }
+    .stepwizard-row {
+        display: table-row;
+    }
+    .stepwizard {
+        display: table;
+        width: 50%;
+        position: relative;
+    }
+    .stepwizard-step button[disabled] {
+        opacity: 1 !important;
+        filter: alpha(opacity=100) !important;
+    }
+    .stepwizard-row:before {
+        top: 14px;
+        bottom: 0;
+        position: absolute;
+        content: " ";
+        width: 100%;
+        height: 1px;
+        background-color: #ccc;
+        z-order: 0;
+    }
+    .stepwizard-step {
+        display: table-cell;
+        text-align: center;
+        position: relative;
+    }
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+    }
+</style>
+
+
+<nav class="navbar navbar-expand-lg "style="background-color: #001B3A">
+    <a class="navbar-brand" href="#">Create Paper</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="homepage.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Dashboard.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="studentpage.html">Paper</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="d-flex justify-content-around my-3">
+    <div class="input-group input-group-sm mb-3 w-50 ml-5 mr-lg-5">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Paper name</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+    </div>
+    <div class="input-group input-group-sm mb-3 w-25 mr-lg-5 ml-lg-5 p-0">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm 2">Questions count</span>
+        </div>
+        <input type="text"  class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+    </div>
+    <div class="input-group input-group-sm mb-3 w-25 mr-5 ml-lg-5 p-0">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm 3">Answers count</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+    </div>
+
+</div>
+
+<!--stepper-->
+<div id='TextBoxesGroup'>
+    <div id="TextBoxDiv1">
+        <label>Q1</label>
+        <div>
+            <button href="#collapse1" id="textbox1" class="nav-toggle btn-primary ml-3">1.</button>
+        </div>
+        <div id="collapse1" style="display:none">
+        <div class="container"id="textbox">
+            <div class="row">
+                <div class="col-12">
+                    <div class="input-group mb-3 ">
+                        <input type="text" id="mytext" class="form-control"  placeholder="Input Question" aria-label="" aria-describedby="button-addon2">
+                        <button class="btn btn-secondary b" type="button" id="button-addon2" onclick="myFunction()">Input</button>
+                        <p id="demo"></p>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col">
+                <div id="inputFormRow">
+                    <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" aria-label="Checkbox for following text input">
+                                </div>
+                            </div>
+                            <input type="text" name="title[]" class="form-control m-input" aria-label="Text input with checkbox" autocomplete="off">
+                            <div class="input-group-append">
+                                <button id="removeRow" type="button" class="btn btn-danger">Remove</button>
+                            </div>
+                        </div>
+                </div>
+
+                <div id="newRow"></div>
+                <button id="addRow" type="button" class="btn btn-info mb-3">Add Row</button>
+            </div>
+
+        </div>
+        </div>
+
+    </div>
+</div>
+<input type='button' value='Next' id='addButton' class="btn btn-primary pr-5 pl-5 ml-3 mt-5">
+<input type='button' value='Remove' id='removeButton' class="btn btn-danger pr-5 pl-5 ml-3 mt-5">
+<input type='button' value='Submit' id='getButtonValue' class="btn btn-success pr-5 pl-5 ml-3 mt-5">
+
+<script src="assests/js/jquery.js"></script>
+<script src="assests/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+        $(document).ready(function(){
+
+            var counter = 2;
+
+            $("#addButton").click(function () {
+
+                if(counter>10){
+                    alert("Only 10 textboxes allow");
+                    return false;
+                }
+
+                var newTextBoxDiv = $(document.createElement('div'))
+                    .attr("id", 'TextBoxDiv' + counter);
+
+                newTextBoxDiv.after().html('<label>Q'+ counter + ' </label>' +
+                    ' <div class="container">\n' +
+                    '            <div class="row">\n' +
+                    '                <div class="col-12">\n' +
+                    '                    <div class="input-group mb-3 ">\n' +
+                    '                        <input type="text" id="mytext" class="form-control"  placeholder="input Question" aria-label="" aria-describedby="button-addon2">\n' +
+                    '                        <button class="btn btn-secondary b" type="button" id="button-addon2" onclick="myFunction()">Input</button>\n' +
+                    '                        <p id="demo"></p>\n' +
+                    '                    </div>\n' +
+                    '\n' +
+                    '\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '                 <div class="col">\n' +
+                    '                    <div id="inputFormRow">\n' +
+                    '                        <div class="input-group mb-3">\n' +
+                    '                           <div class="input-group-prepend">\n' +
+                    '                                <div class="input-group-text">\n' +
+                    '                                    <input type="checkbox" aria-label="Checkbox for following text input">\n' +
+                    '                                </div>\n' +
+                    '                            </div>\n' +
+                    '                            <input type="text" name="title[]" class="form-control m-input" aria-label="Text input with checkbox" autocomplete="off">\n' +
+                    '                            <div class="input-group-append">\n' +
+                    '                                <button id="removeRow" type="button" class="btn btn-danger">Remove</button>\n' +
+                    '                            </div>\n' +
+                    '                        </div>\n' +
+                    '                    </div>\n' +
+                    '\n' +
+                    '                    <div id="newRow"></div>\n' +
+                    '                    <button id="addRow" type="button" class="btn btn-info mb-3">Add Row</button>\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '        </div>'
+                );
+
+                newTextBoxDiv.appendTo("#TextBoxesGroup");
+
+
+                counter++;
+            });
+
+            $("#removeButton").click(function () {
+                if(counter==1){
+                    alert("No more textbox to remove");
+                    return false;
+                }
+
+                counter--;
+
+                $("#TextBoxDiv" + counter).remove();
+
+            });
+
+            $("#getButtonValue").click(function () {
+
+                var msg = '';
+                for(i=1; i<counter; i++){
+                    msg += "\n Textbox #" + i + " : " + $('#textbox' + i).val();
+                }
+                alert(msg);
+            });
+
+        });
+    function myFunction() {
+        var x = document.getElementById("myText").value;
+        document.getElementById("demo").innerHTML = x;
+    }
+
+    $("#addRow").click(function () {
+        var html = '';
+        html += '<div id="inputFormRow">';
+        html += '<div class="input-group mb-3">';
+        html += '<div class="input-group-prepend">\n' +
+            '    <div class="input-group-text">\n' +
+            '     <input type="checkbox" aria-label="Checkbox for following text input">\n' +
+            '     </div>\n' +
+            '    </div>\n' +
+            '   <input type="text" name="title[]" class="form-control m-input" aria-label="Text input with checkbox" autocomplete="off">';
+        html += '<div class="input-group-append">';
+        html += '<button id="removeRow" type="button" class="btn btn-danger">Remove</button>';
+        html += '</div>';
+        html += '</div>';
+
+        $('#newRow').append(html);
+    });
+
+    // remove row
+    $(document).on('click', '#removeRow', function () {
+        $(this).closest('#inputFormRow').remove();
+    });
+
+
+    function myFunction() {
+        var x = document.getElementById("myText").value;
+        document.getElementById("input").innerHTML = x;
+    }
+
+        $(document).ready(function() {
+            $('.nav-toggle').click(function(){
+                //get collapse content selector
+                var collapse_content_selector = $(this).attr('href');
+
+                //make the collapse content to be shown or hide
+                var toggle_switch = $(this);
+                $(collapse_content_selector).toggle(function(){
+                    if($(this).css('display')=='none'){
+                        //change the button label to be 'Show'
+                        toggle_switch.html('1.');
+                    }else{
+                        //change the button label to be 'Hide'
+                        toggle_switch.html('1.');
+                    }
+                });
+            });
+
+        });
+</script>
+
+
+
+</body>
+</html>
